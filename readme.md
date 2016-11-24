@@ -168,7 +168,7 @@ A (hosted) service containing repositories of images which responds to the Regis
 
 ### The Docker Components diagram
 
-![Docker components](https://raw.githubusercontent.com/theodorosploumis/docker-java/gh-pages/img/docker-components.png)
+![Docker components](https://raw.githubusercontent.com/theodorosploumis/docker-java/master/img/docker-components.png)
 
 ---
 
