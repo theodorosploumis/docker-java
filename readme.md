@@ -2,7 +2,7 @@
 
 ## Docker with Java - Introduction
 
-#### [Java Meetup Thessaloniki](https://www.meetup.com/Thessaloniki-Java-Meetup-Group/), 2016
+#### [Java Meetup Thessaloniki](http://meetu.ps/33dmsB), 2016
 
 ###### [TheodorosPloumis.com](http://www.theodorosploumis.com/en) / [@theoploumis](http://twitter.com/theoploumis)
 ________________________
@@ -15,7 +15,7 @@ ________________________
 
 ### Let me ask you
 
-- Who knows about [Docker](http://docker.com)?
+- Who knows about [Docker](https://www.docker.com/)?
 - Who uses Docker for development?
 - Who uses Docker in production?
 - Who tried but could not do it?
@@ -24,9 +24,11 @@ ________________________
 
 ### What is Docker (v1.12.3)
 
-> Docker is an open platform for developing, shipping, and running applications.
+> Docker is an open platform for Developing, Shipping and Running applications.
 
-> Docker allows you to package an application with all of its dependencies into a standardized unit for software development.
+OR
+
+> Docker allows you to Package an application with all of its Dependencies into a standardized unit for software development.
 
 ---
 
@@ -42,10 +44,8 @@ ________________________
  - dotCloud (now Docker Inc)
  - March 2013
  - Apache 2.0 license
- - 30k stars on Github
- - 260k public repositories on hub.docker.com
- - Docker Inc acquires everyone <small><sup>TM</sup></small>
- - Docker joins the "[Open Container Initiative](https://www.opencontainers.org/)", June 2015
+ - 37k stars on [Github](https://github.com/docker/docker)
+ - 270k public repositories on docker hub
 
 ---
 
@@ -64,12 +64,12 @@ ________________________
 
 ### Common Docker usages
 
- - Sandbox environment (develop, test, debug, educate)
- - Continuous Integration & Deployment
  - Scaling apps
  - Development collaboration
  - Infrastructure configuration
+ - Sandbox (develop, test, debug, educate etc)
  - Local development
+ - Continuous Integration & Deployment
  - Multi-tier applications
  - PaaS, SaaS
 
@@ -77,9 +77,9 @@ ________________________
 
 ---
 
-### Technology behind Docker
+### Technology stack
 
- - Linux [x86-64](https://www.wikiwand.com/en/X86-64)
+ - Linux [x86-64](https://www.wikiwand.com/en/X86-64) & Windows (Hyper-V)
  - [Go](https://golang.org/) language
  - [Client - Server](https://www.wikiwand.com/en/Client%E2%80%93server_model) (deamon) architecture
  - Union file systems ([UnionFS](https://www.wikiwand.com/en/UnionFS): AUFS, btrfs, vfs etc)
@@ -137,7 +137,6 @@ A Client with a Daemon as also as the docker-compose tool. Usually referred simp
 A tool which makes it really easy to create Docker hosts on your computer,
 on cloud providers and inside your own data center.
 It creates servers, installs Docker on them, then configures the Docker client to talk to them.
-Required for Mac, Windows users.
 
 ---
 
@@ -167,6 +166,12 @@ A (hosted) service containing repositories of images which responds to the Regis
 
 ---
 
+### The Docker Components diagram
+
+![Docker components](https://raw.githubusercontent.com/theodorosploumis/docker-java/gh-pages/img/docker-components.png)
+
+---
+
 ### Steps of a Docker workflow
 
 ```
@@ -176,7 +181,7 @@ docker run -i -t -d ubuntu:15.04 /bin/bash
  - Pulls the ubuntu:15.04 [image](https://docs.docker.com/engine/userguide/containers/dockerimages/ "A read-only layer that is the base of your container. It can have a parent image to abstract away the more basic filesystem snapshot.") from the [registry](https://docs.docker.com/registry/ "The central place where all publicly published images live. You can search it, upload your images there and when you pull a docker image, it comes the repository/hub.")
  - Creates a new [container](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/ "A runnable instance of the image, basically it is a process isolated by docker that runs on top of the filesystem that an image provides.")
  - Allocates a filesystem and mounts a read-write [layer](https://docs.docker.com/engine/reference/glossary/#filesystem "A set of read-only files to provision the system. Think of a layer as a read only snapshot of the filesystem.")
- - Allocates a [network/bridge interface](https://www.wikiwand.com/en/Bridging_%28networking%29 "")
+ - Allocates a [network/bridge interface](https://www.wikiwand.com/en/Bridging_%28networking%29)
  - Sets up an [IP address](https://www.wikiwand.com/en/IP_address "An Internet Protocol address (IP address) is a numerical label assigned to each device (e.g., computer, printer) participating in a computer network that uses the Internet Protocol for communication.")
  - Executes a process that you specify (``` /bin/bash ```)
  - Captures and provides application output
