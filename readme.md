@@ -175,7 +175,7 @@ A (hosted) service containing repositories of images which responds to the Regis
 ### Steps of a Docker workflow
 
 ```
-docker run -i -t -d ubuntu:15.04 /bin/bash
+docker run -i -t ubuntu:15.04 /bin/bash
 ```
 
  - Pulls the ubuntu:15.04 [image](https://docs.docker.com/engine/userguide/containers/dockerimages/ "A read-only layer that is the base of your container. It can have a parent image to abstract away the more basic filesystem snapshot.") from the [registry](https://docs.docker.com/registry/ "The central place where all publicly published images live. You can search it, upload your images there and when you pull a docker image, it comes the repository/hub.")
@@ -185,6 +185,8 @@ docker run -i -t -d ubuntu:15.04 /bin/bash
  - Sets up an [IP address](https://www.wikiwand.com/en/IP_address "An Internet Protocol address (IP address) is a numerical label assigned to each device (e.g., computer, printer) participating in a computer network that uses the Internet Protocol for communication.")
  - Executes a process that you specify (``` /bin/bash ```)
  - Captures and provides application output
+
+Screencast: [Steps of a Docker workflow](https://asciinema.org/a/1yqyy1uu1taxciqf4136sy3ld).
 
 ---
 
@@ -206,7 +208,7 @@ docker run -i -t -d ubuntu:15.04 /bin/bash
 
  - [Dockerfile with inline comments](https://github.com/theodorosploumis/docker-presentation/blob/gh-pages/examples/dockerfile/Dockerfile) just for education
  - [Dockerfile reference](https://docs.docker.com/engine/reference/builder/) on docker docs
- - Official Dockerfiles ([rails](https://github.com/docker-library/rails/blob/master/Dockerfile), [nodejs](https://github.com/ReadyTalk/nodejs-docker/blob/master/base/Dockerfile), [django](https://github.com/docker-library/django/blob/master/3.4/Dockerfile), [Drupal](https://github.com/docker-library/drupal/blob/master/8.1/fpm/Dockerfile))
+ - Public Dockerfiles ([wildfy](https://github.com/jboss-dockerfiles/wildfly/blob/master/Dockerfile), [Spring Boot](https://github.com/Bankmonitor/docker/blob/master/Dockerfile), [openjdk 9](https://github.com/docker-library/openjdk/blob/master/9-jre/Dockerfile))
 
 ---
 
@@ -214,7 +216,7 @@ docker run -i -t -d ubuntu:15.04 /bin/bash
 
 ```
 // General info
-man docker // man docker-run
+man docker // man docker run
 docker help // docker help run
 docker info
 docker version
@@ -259,6 +261,7 @@ docker rm [CONTAINER]
 docker pull ubuntu
 docker run -it --name ubuntu_example ubuntu /bin/bash
 ```
+Screencast: [SSH into a container](https://asciinema.org/a/0z4bu6ub4l3z6n3t6b0d5e35g)
 
 ---
 
@@ -267,9 +270,8 @@ docker run -it --name ubuntu_example ubuntu /bin/bash
 Let's build a [jenkins image](https://github.com/komljen/dockerfile-examples/blob/master/jenkins/Dockerfile)
 
 ```
-cd ~/Docker-presentation
-git clone git@github.com:komljen/dockerfile-examples.git.git
-cd dockerfile-examples/jenkins
+git clone git@github.com:komljen/dockerfile-examples.git ~/Docker-presentation
+cd ~/Docker-presentation/dockerfile-examples/jenkins
 docker build -t jenkins-local .
 
 // Test it
@@ -486,7 +488,7 @@ There are known best practices (see a list at [examples/tips](https://github.com
 | Type | Software |
 |:----:|----------|
 | Clustering/orchestration | [Swarm](https://docs.docker.com/swarm/), [Kubernetes](http://kubernetes.io/), [Marathon](https://mesosphere.github.io/marathon/), [MaestroNG](https://github.com/signalfx/maestro-ng), [decking](http://decking.io/), [shipyard](http://shipyard-project.com/) |
-| Docker registries | [Portus](http://port.us.org/), [Docker Distribution](https://github.com/docker/distribution), [hub.docker.com](http://hub.docker.com), [quay.io](https://quay.io), [Google container registry](https://cloud.google.com/tools/container-registry/), [Artifactory](https://www.jfrog.com/artifactory/), [projectatomic.io](http://www.projectatomic.io/) |
+| Docker registries | [Portus](http://port.us.org/), [Docker Distribution](https://github.com/docker/distribution), [hub.docker.com](http://hub.docker.com), [quay.io](https://quay.io), [Google container registry](https://cloud.google.com/tools/container-registry/), [Artifactory](https://www.jfrog.com/artifactory/), [projectatomic.io](http://www.projectatomic.io/), [Treescale.com/](https://treescale.com/), [Canister.io/](https://www.canister.io/) |
 | PaaS with Docker | [Rancher](http://rancher.com/), [Tsuru](https://tsuru.io/), [dokku](https://github.com/dokku/dokku), [flynn](https://flynn.io/),  [Octohost](http://octohost.io/), [DEIS](http://deis.io/) |
 | OS made of Containers | [RancherOS](http://rancher.com/rancher-os/) |
 
