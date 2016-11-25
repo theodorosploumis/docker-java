@@ -128,41 +128,43 @@ but instead through the Docker client with the RESTful api or sockets.
 
 A Client with a Daemon as also as the docker-compose tool. Usually referred simply as "docker".
 
+![Docker engine logo](https://raw.githubusercontent.com/theodorosploumis/docker-java/master/img/docker_logo_simple.png)
+
 ---
 
 ### Docker machine
-
-![Docker machine logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_machine.png)
 
 A tool which makes it really easy to create Docker hosts on your computer,
 on cloud providers and inside your own data center.
 It creates servers, installs Docker on them, then configures the Docker client to talk to them.
 
+![Docker machine logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_machine.png)
+
 ---
 
 ### Docker compose
 
-![Docker compose logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_compose.png)
-
 A tool for defining and running complex applications with Docker
 (eg a multi-container application) with a single file.
+
+![Docker compose logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_compose.png)
 
 ---
 
 ### Docker swarm
 
-![Docker swarm logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_swarm.png)
-
 A native clustering tool for Docker. Swarm pools together several Docker
 hosts and exposes them as a single virtual Docker host. It scale up to multiple hosts.
+
+![Docker swarm logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_swarm.png)
 
 ---
 
 ### Docker distribution
 
-![Docker distribution logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_distribution.png)
-
 A (hosted) service containing repositories of images which responds to the Registry API.
+
+![Docker distribution logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_distribution.png)
 
 ---
 
