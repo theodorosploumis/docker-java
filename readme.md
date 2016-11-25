@@ -240,6 +240,7 @@ docker inspect -f "{{ .State.StartedAt }}" [CONTAINER]
 docker rm [CONTAINER]
 
 ```
+Screencast: [Common Docker commands](https://asciinema.org/a/3hczjxzuvih674htyis6o8q6t)
 
 ---
 
@@ -273,13 +274,16 @@ Let's build a [jenkins image](https://github.com/komljen/dockerfile-examples/blo
 
 ```
 git clone git@github.com:komljen/dockerfile-examples.git ~/Docker-presentation
-cd ~/Docker-presentation/dockerfile-examples/jenkins
+cd ~/Docker-presentation/jenkins
 docker build -t jenkins-local .
 
 // Test it
 docker run -d -p 8099:8080 --name jenkins_example jenkins-local
+
 // Open http://localhost:8099
+curl localhost:8099
 ```
+Screencast: [Docker build an image](https://asciinema.org/a/36gcw7ssyat360t59nfn6ete5)
 
 ---
 
@@ -301,10 +305,12 @@ docker run --name apache_volume_example \
 // Locally create an index.html file
 mkdir html
 cd html
-echo "It works using mount." >> index.html
+echo "It works using docker volume." >> index.html
 
 // Open http://localhost:8180 to view the html file
+curl localhost:8180
 ```
+Screencast: [Docker simple volume example](https://asciinema.org/a/ep1ugo3eokl2nkjap054cgmqj)
 
 ---
 
@@ -317,8 +323,8 @@ cd ~/Docker-presentation
 mkdir drupal-link-example
 cd drupal-link-example
 
-docker pull drupal:8.0.6-apache
-docker pull mysql:5.5
+docker pull drupal:8.2.3-apache
+docker pull mysql:8
 
 // Start a container for mysql
 docker run --name mysql_example \
@@ -333,10 +339,10 @@ docker run --name mysql_example \
 docker run -d --name drupal_example \
            -p 8280:80 \
            --link mysql_example:mysql \
-           drupal:8.0.6-apache
+           drupal:8.2.3-apache
 
 // Open http://localhost:8280 to continue with the installation
-// On the db host use: mysql
+// On the UI for the db host use: mysql
 
 // There is a proper linking
 docker inspect -f "{{ .HostConfig.Links }}" drupal_example
@@ -523,4 +529,4 @@ There are known best practices (see a list at [examples/tips](https://github.com
 
 > Next: Docker in production, Scaling, Private registries, PaaS.
 
-###### In this presentation I have used [oh my zsh](http://ohmyz.sh/), [docker 1.12.3](https://github.com/docker/docker/releases/tag/v1.12.3), [wharfee](https://github.com/j-bennet/wharfee) and [dry](https://github.com/moncho/dry).
+###### In this presentation I have used: [oh my zsh](http://ohmyz.sh/) / [reveal.js](https://github.com/hakimel/reveal.js) / [Simple Docker UI for Chrome](https://github.com/felixgborrego/docker-ui-chrome-app) / [docker compose 1.9.0](https://github.com/docker/compose/releases/tag/1.9.0) / [docker 1.12.3](https://github.com/docker/docker/releases/tag/v1.12.3)
