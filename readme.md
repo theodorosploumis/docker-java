@@ -24,11 +24,7 @@ ________________________
 
 ### What is Docker (v1.12.3)
 
-> Docker is an open platform for Developing, Shipping and Running applications.
-
-OR
-
-> Docker allows you to Package an application with all of its Dependencies into a standardized unit for software development.
+> Docker is an open platform for Developing, Packaging, Shipping and Running applications.
 
 ---
 
@@ -134,9 +130,7 @@ A Client with a Daemon as also as the docker-compose tool. Usually referred simp
 
 ### Docker machine
 
-A tool which makes it really easy to create Docker hosts on your computer,
-on cloud providers and inside your own data center.
-It creates servers, installs Docker on them, then configures the Docker client to talk to them.
+Creates servers, installs Docker on them and configures the Docker client to talk to them.
 
 ![Docker machine logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_machine.png)
 
@@ -153,8 +147,8 @@ A tool for defining and running complex applications with Docker
 
 ### Docker swarm
 
-A native clustering tool for Docker. Swarm pools together several Docker
-hosts and exposes them as a single virtual Docker host. It scale up to multiple hosts.
+Swarm pools together several Docker hosts and exposes them as a single virtual Docker host (clustering).
+It scales up to multiple hosts.
 
 ![Docker swarm logo](https://raw.githubusercontent.com/theodorosploumis/docker-presentation/gh-pages/img/docker_swarm.png)
 
@@ -214,46 +208,15 @@ Screencast: [Steps of a Docker workflow](https://asciinema.org/a/1yqyy1uu1taxciq
 
 ---
 
-### Common Docker Commands
-
-```
-// General info
-man docker // man docker run
-docker help // docker help run
-docker info
-docker version
-docker network ls
-
-// Images
-docker images // docker [IMAGE_NAME]
-docker pull [IMAGE] // docker push [IMAGE]
-
-// Containers
-docker run
-docker ps // docker ps -a, docker ps -l
-docker stop/start/restart [CONTAINER]
-docker stats [CONTAINER]
-docker top [CONTAINER]
-docker port [CONTAINER]
-docker inspect [CONTAINER]
-docker inspect -f "{{ .State.StartedAt }}" [CONTAINER]
-docker rm [CONTAINER]
-
-```
-Screencast: [Common Docker commands](https://asciinema.org/a/3hczjxzuvih674htyis6o8q6t)
-
----
-
 ### Docker examples
 
 - SSH into a container
 - Build an image
 - Docker [Volume](https://docs.docker.com/engine/userguide/containers/dockervolumes/)
+- Common Docker Commands
 - [Linked](https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/) containers
 - Using [docker-compose](https://docs.docker.com/compose/)
 - Scale containers with docker-compose
-- Share an image (share this presentation)
-- Package an app with its environment
 - Screen and sound within containers (x-forward)
 
 ---
@@ -314,38 +277,62 @@ Screencast: [Docker simple volume example](https://asciinema.org/a/ep1ugo3eokl2n
 
 ---
 
-### Example: Docker link containers
-
-Let's create a [Drupal app](https://hub.docker.com/_/drupal/) (apache, php, mysql, drupal)
+### Example: Common Docker Commands
 
 ```
-cd ~/Docker-presentation
-mkdir drupal-link-example
-cd drupal-link-example
+// General info
+man docker // man docker run
+docker help // docker help run
+docker info
+docker version
+docker network ls
 
-docker pull drupal:8.2.3-apache
-docker pull mysql:8
+// Images
+docker images // docker [IMAGE_NAME]
+docker pull [IMAGE] // docker push [IMAGE]
+
+// Containers
+docker run
+docker ps // docker ps -a, docker ps -l
+docker stop/start/restart [CONTAINER]
+docker stats [CONTAINER]
+docker top [CONTAINER]
+docker inspect -f "{{ .State.StartedAt }}" [CONTAINER]
+docker rm [CONTAINER]
+
+```
+Screencast: [Common Docker commands](https://asciinema.org/a/3hczjxzuvih674htyis6o8q6t)
+
+---
+
+### Example: Docker link containers
+
+Let's create a [Wildfly app](https://github.com/arun-gupta/docker-images/tree/master/wildfly-mysql-javaee7) with apache
+
+```
+docker pull arungupta/wildfly-mysql-javaee7
+docker pull mysql:5.5
 
 // Start a container for mysql
 docker run --name mysql_example \
-           -e MYSQL_ROOT_PASSWORD=root \
-           -e MYSQL_DATABASE=drupal \
-           -e MYSQL_USER=drupal \
-           -e MYSQL_PASSWORD=drupal \
+           -e MYSQL_DATABASE=sample \
+           -e MYSQL_USER=mysql \
+           -e MYSQL_PASSWORD=mysql \
+           -e MYSQL_ROOT_PASSWORD=supersecret \
            -d mysql:5.5
 
-// Start a Drupal container and link it with mysql
+// Create WildFly container, with MySQL JDBC resource pre-configured
 // Usage: --link [name or id]:alias
-docker run -d --name drupal_example \
-           -p 8280:80 \
+docker run -d --name wildfly_example \
+           -p 8088:8080 \
            --link mysql_example:mysql \
-           drupal:8.2.3-apache
+           arungupta/wildfly-mysql-javaee7
 
-// Open http://localhost:8280 to continue with the installation
+// Open http://localhost:8088 to see the Wildfly UI
 // On the UI for the db host use: mysql
 
 // There is a proper linking
-docker inspect -f "{{ .HostConfig.Links }}" drupal_example
+docker inspect -f "{{ .HostConfig.Links }}" wildfly_example
 ```
 
 ---
@@ -366,78 +353,13 @@ docker-compose up -d
 
 ---
 
-### Example: Share a public Image
-
-```
-cd ~/Docker-presentation
-git clone git@github.com:theodorosploumis/docker-presentation.git
-cd docker-presentation
-
-docker pull nimmis/alpine-apache
-docker build -t tplcom/docker-presentation .
-
-// Test it
-docker run -itd --name docker_presentation \
-           -p 8480:80 \
-           tplcom/docker-presentation
-
-// Open http://localhost:8480, you should see this presentation
-
-// Push it on the hub.docker.com
-docker push tplcom/docker-presentation
-```
-
----
-
-### Example: Export/Save/Load etc
-
-```
-docker pull nimmis/alpine-apache
-docker run -d --name apache_example \
-           nimmis/alpine-apache
-
-// Create a file inside the container.
-// See https://github.com/nimmis/docker-alpine-apache for details.
-docker exec -ti apache_example \
-            /bin/sh -c 'mkdir /test && echo "This is it." >> /test/test.txt'
-
-// Test it. You should see message: "This is it."
-docker exec apache_example cat /test/test.txt
-
-// Commit the change.
-docker commit apache_export_example myapache:latest
-
-// Create a new container with the new image.
-docker run -d --name myapache_example myapache
-
-// You should see the new folder/file inside the myapache_example container.
-docker exec myapache_example cat /test/test.txt
-
-// Export the container as image
-cd ~/Docker-presentation
-docker export myapache_example > myapache_example.tar
-
-// Import a new image from the exported files
-cd ~/Docker-presentation
-docker import myapache_example.tar myapache:new
-
-// Save a new image as tar
-docker save -o ~/Docker-presentation/myapache_image.tar myapache:new
-
-// Load an image from tar file
-docker load < myapache_image.tar
-
-```
-
----
-
 ### Example: GUI with Docker
 
 See examples at [hub.docker.com/u/jess](https://hub.docker.com/u/jess/)
 
 ```
-// Before staring we should grant access to everyone on the X Server (locally)
-// Otherwise the containers below will never start and they will not be able to use x11
+// Grant access to everyone on the X Server (locally)
+// Otherwise the containers below will never start
 xhost +
 
 // Libreoffice
@@ -525,7 +447,7 @@ There are known best practices (see a list at [examples/tips](https://github.com
 
 ### Questions?
 
-[Review this presentation](#)
+[Review this presentation](https://goo.gl/w1ZmXo)
 
 > Next: Docker in production, Scaling, Private registries, PaaS.
 
