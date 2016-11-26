@@ -307,7 +307,7 @@ Screencast: [Common Docker commands](https://asciinema.org/a/3hczjxzuvih674htyis
 
 ### Example: Docker link containers
 
-Let's create a [Wildfly app](https://github.com/arun-gupta/docker-images/tree/master/wildfly-mysql-javaee7) with apache
+Let's create a [Wildfly app](https://github.com/arun-gupta/docker-images/tree/master/wildfly-mysql-javaee7) with mysql
 
 ```
 docker pull arungupta/wildfly-mysql-javaee7
