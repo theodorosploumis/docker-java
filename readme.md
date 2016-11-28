@@ -75,7 +75,7 @@ ________________________
 
 ### Technology stack
 
- - Linux [x86-64](https://www.wikiwand.com/en/X86-64) & Windows (Hyper-V)
+ - Linux [x86-64](https://www.wikiwand.com/en/X86-64) & Windows (Server 2016+)
  - [Go](https://golang.org/) language
  - [Client - Server](https://www.wikiwand.com/en/Client%E2%80%93server_model) (deamon) architecture
  - Union file systems ([UnionFS](https://www.wikiwand.com/en/UnionFS): AUFS, btrfs, vfs etc)
@@ -307,32 +307,38 @@ Screencast: [Common Docker commands](https://asciinema.org/a/3hczjxzuvih674htyis
 
 ### Example: Docker link containers
 
-Let's create a [Wildfly app](https://github.com/arun-gupta/docker-images/tree/master/wildfly-mysql-javaee7) with mysql
+Let's create a [JBoss Ticket Monster app](https://github.com/jboss-developer/ticket-monster)
 
 ```
-docker pull arungupta/wildfly-mysql-javaee7
-docker pull mysql:5.5
+docker pull rafabene/wildfly-ticketmonster-h2
+docker pull postgres:9.4
+docker pull donnex/pgweb
 
-// Start a container for mysql
-docker run --name mysql_example \
-           -e MYSQL_DATABASE=sample \
-           -e MYSQL_USER=mysql \
-           -e MYSQL_PASSWORD=mysql \
-           -e MYSQL_ROOT_PASSWORD=supersecret \
-           -d mysql:5.5
+// Start a container for postgres
+docker run -d --name postgres_db \
+           -e POSTGRES_USER=ticketmonster \
+           -e POSTGRES_PASSWORD=ticketmonster-docker \
+           postgres:9.4
 
-// Create WildFly container, with MySQL JDBC resource pre-configured
+// Create a container for Ticket Monster app
 // Usage: --link [name or id]:alias
-docker run -d --name wildfly_example \
+docker run -d --name ticketmonster \
            -p 8088:8080 \
-           --link mysql_example:mysql \
-           arungupta/wildfly-mysql-javaee7
+           --link postgres_db:db \
+           rafabene/wildfly-ticketmonster-h2
 
-// Open http://localhost:8088 to see the Wildfly UI
-// On the UI for the db host use: mysql
+// Open http://localhost:8088/ticket-monster/ to see the App UI
 
 // There is a proper linking
-docker inspect -f "{{ .HostConfig.Links }}" wildfly_example
+docker inspect -f "{{ .HostConfig.Links }}" ticketmonster
+
+// Link a pgweb ui
+docker run -d -p 8022:8080 \
+           --link postgres_db \
+           donnex/pgweb
+
+// Open http://localhost:8022
+
 ```
 
 ---
@@ -439,7 +445,7 @@ There are known best practices (see a list at [examples/tips](https://github.com
 
  - [Awesome Docker](https://github.com/veggiemonk/awesome-docker) (list of Docker resources & projects)
  - [Docker cheat sheet](https://github.com/wsargent/docker-cheat-sheet)
- - [Docker in Practice](https://www.manning.com/books/docker-in-practice), [The Docker Book](http://www.dockerbook.com/) (books)
+ - [Docker in Practice](https://www.manning.com/books/docker-in-practice), [The Docker Book](http://www.dockerbook.com/), [Docker for Java Developers - free](http://shop.oreilly.com/product/0636920050872.do) (books)
  - [Docker aliases/shortcuts](https://github.com/theodorosploumis/docker-presentation/tree/gh-pages/examples/shortcuts/docker-aliases.sh)
  - Docker [case studies](https://www.docker.com/customers)
 
