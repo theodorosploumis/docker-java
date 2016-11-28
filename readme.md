@@ -216,8 +216,8 @@ Screencast: [Steps of a Docker workflow](https://asciinema.org/a/1yqyy1uu1taxciq
 - Common Docker Commands
 - [Linked](https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/) containers
 - Using [docker-compose](https://docs.docker.com/compose/)
-- Scale containers with docker-compose
-- Screen and sound within containers (x-forward)
+- Scale with docker-compose
+- Screen and sound within containers
 
 ---
 
@@ -310,7 +310,7 @@ Screencast: [Common Docker commands](https://asciinema.org/a/3hczjxzuvih674htyis
 Let's create a [JBoss Ticket Monster app](https://github.com/jboss-developer/ticket-monster)
 
 ```
-docker pull rafabene/wildfly-ticketmonster-h2
+docker pull rafabene/wildfly-ticketmonster
 docker pull postgres:9.4
 docker pull donnex/pgweb
 
@@ -337,7 +337,8 @@ docker run -d -p 8022:8080 \
            --link postgres_db \
            donnex/pgweb
 
-// Open http://localhost:8022
+// Open http://localhost:8022 and connect to the Pgweb UI
+// The postgres ID will also be the host (alias of host)
 
 ```
 
@@ -345,16 +346,34 @@ docker run -d -p 8022:8080 \
 
 ### Example: Using Docker Compose
 
-Let's create a Drupal app with [docker-compose.yml](https://github.com/theodorosploumis/docker-presentation/blob/gh-pages/examples/docker-compose/docker-compose.yml)
+Let's do the same but with [docker-compose.yml](https://github.com/theodorosploumis/docker-java/blob/master/examples/docker-compose/docker-compose.yml)
 
 ```
 cd ~/Docker-presentation
-git clone git@github.com:theodorosploumis/docker-presentation.git
+git clone git@github.com:theodorosploumis/docker-java.git
 cd docker-presentation/examples/docker-compose
 
 // Run docker-compose using the docker-compose.yml
-cat docker-compose.yml
 docker-compose up -d
+
+// Same as previous
+```
+
+---
+
+### Example: Scale with Docker Compose
+
+Following from previous...
+
+```
+// Create up to 10 Ticket Monster apps
+docker-compose scale mywildfly=10
+
+// Get their IP addresses
+docker ps
+
+// Open several apps (eg http://localhost:32781 etc)
+// Both apps share the same database
 ```
 
 ---

@@ -6,7 +6,7 @@ networks:
 
 services:
   db:
-    image: postgres
+    image: postgres:9.4
     container_name: "db"
     environment:
       POSTGRES_USER: ticketmonster
@@ -19,3 +19,9 @@ services:
       - mynet
     ports:
       - 8080
+  pgweb:
+    image: donnex/pgweb
+    links:
+      - db
+    ports:
+      - 8022:8080
