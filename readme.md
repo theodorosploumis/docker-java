@@ -439,10 +439,10 @@ There are known best practices (see a list at [examples/tips](https://github.com
 ### The Docker war
 
 | Type | Software |
-|:----:|----------|
-| Clustering/orchestration | [Swarm](https://docs.docker.com/swarm/), [Kubernetes](http://kubernetes.io/), [Marathon](https://mesosphere.github.io/marathon/), [MaestroNG](https://github.com/signalfx/maestro-ng), [decking](http://decking.io/), [shipyard](http://shipyard-project.com/) |
-| Docker registries | [Portus](http://port.us.org/), [Docker Distribution](https://github.com/docker/distribution), [hub.docker.com](http://hub.docker.com), [quay.io](https://quay.io), [Google container registry](https://cloud.google.com/tools/container-registry/), [Artifactory](https://www.jfrog.com/artifactory/), [projectatomic.io](http://www.projectatomic.io/), [Treescale.com/](https://treescale.com/), [Canister.io/](https://www.canister.io/) |
-| PaaS with Docker | [Rancher](http://rancher.com/), [Tsuru](https://tsuru.io/), [dokku](https://github.com/dokku/dokku), [flynn](https://flynn.io/),  [Octohost](http://octohost.io/), [DEIS](http://deis.io/) |
+|----|----------|
+| Cluster & <br>orchestrate | [Swarm](https://docs.docker.com/swarm/), [Kubernetes](http://kubernetes.io/), [Marathon](https://mesosphere.github.io/marathon/), [MaestroNG](https://github.com/signalfx/maestro-ng), [decking](http://decking.io/), [shipyard](http://shipyard-project.com/) |
+| Registry | [Portus](http://port.us.org/), [Docker Distribution](https://github.com/docker/distribution), [docker hub](http://hub.docker.com), [quay.io](https://quay.io), [Google Container Reg.](https://cloud.google.com/tools/container-registry/), [Artifactory](https://www.jfrog.com/artifactory/), [projectatomic.io](http://www.projectatomic.io/), [Treescale.com](https://treescale.com/), [Canister.io](https://www.canister.io/) |
+| PaaS | [Rancher](http://rancher.com/), [Tsuru](https://tsuru.io/), [dokku](https://github.com/dokku/dokku), [flynn](https://flynn.io/),  [Octohost](http://octohost.io/), [DEIS](http://deis.io/) |
 
 ---
 
@@ -450,6 +450,7 @@ There are known best practices (see a list at [examples/tips](https://github.com
 
 - [Rocket, rkt](https://github.com/coreos/rkt)
 - [Linux Containers, LXC](https://linuxcontainers.org/)
+- [OpenVZ](https://openvz.org/)
 - [BSD Jails](https://www.freebsd.org/doc/handbook/jails.html)
 - [Solaris Zones](http://oracle.com/solaris)
 - [drawbridge](http://research.microsoft.com/en-us/projects/drawbridge/)
