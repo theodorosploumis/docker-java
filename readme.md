@@ -373,7 +373,7 @@ docker-compose scale mywildfly=10
 docker ps
 
 // Open several apps (eg http://localhost:32781 etc)
-// Both apps share the same database
+// All apps share the same database
 ```
 
 ---
@@ -388,33 +388,32 @@ See examples at [hub.docker.com/u/jess](https://hub.docker.com/u/jess/)
 xhost +
 
 // Libreoffice
-docker run  -d \
-            -v /etc/localtime:/etc/localtime:ro \
-            -v /tmp/.X11-unix:/tmp/.X11-unix \
-            -e DISPLAY=unix$DISPLAY \
-            -e GDK_SCALE \
-            -e GDK_DPI_SCALE \
-            --name libreoffice \
-            jess/libreoffice
+docker run -it \
+           -v /tmp/.X11-unix:/tmp/.X11-unix \
+           -e DISPLAY=unix$DISPLAY \
+           --name cathode \
+           jess/cathode
 
 // SublimeText 3
 docker run -it \
+           -e NEWUSER=$USER \
            -v $HOME/.config/sublime-text-3/:/root/.config/sublime-text-3 \
            -v /tmp/.X11-unix:/tmp/.X11-unix \
-           -e DISPLAY=$DISPLAY \
+           -e "DISPLAY=unix${DISPLAY}" \
            --name sublime_text \
            jess/sublime-text-3
 
 // Audacity (sound in docker container)
-docker run  -d \
-            -v /etc/localtime:/etc/localtime:ro \
-            -v /tmp/.X11-unix:/tmp/.X11-unix \
-            -e DISPLAY=unix$DISPLAY \
-            -e QT_DEVICE_PIXEL_RATIO \
-            --device /dev/snd \
-            --group-add audio \
-            --name audacity \
-            jess/audacity
+docker run --rm \
+            -u $(id -u):$(id -g) \
+            -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+            -v /dev/snd:/dev/snd \
+            -v "$HOME:$HOME" \
+            -w "$HOME" \
+            -e DISPLAY="unix$DISPLAY" \
+            -e HOME \
+            $(find /dev/snd/ -type c | sed 's/^/--device /') \
+            knickers/audacity
 
 // Disable access to x11
 xhost -
@@ -427,14 +426,13 @@ xhost -
 
 There are known best practices (see a list at [examples/tips](https://github.com/theodorosploumis/docker-presentation/tree/gh-pages/examples/tips))
 
-- Optimize containers (check [fromlatest.io](https://www.fromlatest.io/) and [imagelayers.io](https://imagelayers.io))
-- Create your own tiny base
+- Optimize containers (see [imagelayers.io](https://imagelayers.io/?images=maven:3.3.1-jdk-8))
+- Create your own, tiny base images
 - Containers are not Virtual Machines
 - Full stack Images VS 1 process per Container
-- Create your private registry
-- Create shortcut commands
-- Use docker-compose.yml templates (see why at [lorry.io](https://lorry.io/))
-- Be aware of the hub.docker.com docker agent version
+- Use files/scripts to setup container
+- Prefer using docker-compose
+- Production needs orchestration tools
 
 ---
 
@@ -445,7 +443,6 @@ There are known best practices (see a list at [examples/tips](https://github.com
 | Clustering/orchestration | [Swarm](https://docs.docker.com/swarm/), [Kubernetes](http://kubernetes.io/), [Marathon](https://mesosphere.github.io/marathon/), [MaestroNG](https://github.com/signalfx/maestro-ng), [decking](http://decking.io/), [shipyard](http://shipyard-project.com/) |
 | Docker registries | [Portus](http://port.us.org/), [Docker Distribution](https://github.com/docker/distribution), [hub.docker.com](http://hub.docker.com), [quay.io](https://quay.io), [Google container registry](https://cloud.google.com/tools/container-registry/), [Artifactory](https://www.jfrog.com/artifactory/), [projectatomic.io](http://www.projectatomic.io/), [Treescale.com/](https://treescale.com/), [Canister.io/](https://www.canister.io/) |
 | PaaS with Docker | [Rancher](http://rancher.com/), [Tsuru](https://tsuru.io/), [dokku](https://github.com/dokku/dokku), [flynn](https://flynn.io/),  [Octohost](http://octohost.io/), [DEIS](http://deis.io/) |
-| OS made of Containers | [RancherOS](http://rancher.com/rancher-os/) |
 
 ---
 
@@ -453,7 +450,6 @@ There are known best practices (see a list at [examples/tips](https://github.com
 
 - [Rocket, rkt](https://github.com/coreos/rkt)
 - [Linux Containers, LXC](https://linuxcontainers.org/)
-- [Linux container hypervisor, LXD](http://www.ubuntu.com/cloud/lxd)
 - [BSD Jails](https://www.freebsd.org/doc/handbook/jails.html)
 - [Solaris Zones](http://oracle.com/solaris)
 - [drawbridge](http://research.microsoft.com/en-us/projects/drawbridge/)
@@ -476,4 +472,4 @@ There are known best practices (see a list at [examples/tips](https://github.com
 
 > Next: Docker in production, Scaling, Private registries, PaaS.
 
-###### In this presentation I have used: [oh my zsh](http://ohmyz.sh/) / [reveal.js](https://github.com/hakimel/reveal.js) / [Simple Docker UI for Chrome](https://github.com/felixgborrego/docker-ui-chrome-app) / [docker compose 1.9.0](https://github.com/docker/compose/releases/tag/1.9.0) / [docker 1.12.3](https://github.com/docker/docker/releases/tag/v1.12.3)
+###### Tools used: [oh my zsh](http://ohmyz.sh/) / [reveal.js](https://github.com/hakimel/reveal.js) / [Simple Docker UI for Chrome](https://github.com/felixgborrego/docker-ui-chrome-app) / [docker compose 1.9.0](https://github.com/docker/compose/releases/tag/1.9.0) / [docker 1.12.3](https://github.com/docker/docker/releases/tag/v1.12.3)
