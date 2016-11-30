@@ -338,7 +338,8 @@ docker run -d -p 8022:8080 \
            donnex/pgweb
 
 // Open http://localhost:8022 and connect to the Pgweb UI
-// The postgres ID will also be the host (alias of host)
+// Tip to find the Postgres credentials.
+// Type: docker inspect --format='{{json .Config}}' postgres_db
 
 ```
 
@@ -349,14 +350,14 @@ docker run -d -p 8022:8080 \
 Let's do the same but with [docker-compose.yml](https://github.com/theodorosploumis/docker-java/blob/master/examples/docker-compose/docker-compose.yml)
 
 ```
-cd ~/Docker-presentation
-git clone git@github.com:theodorosploumis/docker-java.git
-cd docker-presentation/examples/docker-compose
+git clone git@github.com:theodorosploumis/docker-java.git ~/docker-java
+cd ~/docker-java/examples/docker-compose
 
 // Run docker-compose using the docker-compose.yml
 docker-compose up -d
 
 // Same as previous
+// Eg open http://localhost:8088/ticket-monster/ etc
 ```
 
 ---
@@ -441,7 +442,7 @@ There are known best practices (see a list at [examples/tips](https://github.com
 | Type | Software |
 |----|----------|
 | Cluster & <br>orchestrate | [Swarm](https://docs.docker.com/swarm/), [Kubernetes](http://kubernetes.io/), [Marathon](https://mesosphere.github.io/marathon/), [MaestroNG](https://github.com/signalfx/maestro-ng), [decking](http://decking.io/), [shipyard](http://shipyard-project.com/) |
-| Registry | [Portus](http://port.us.org/), [Docker Distribution](https://github.com/docker/distribution), [docker hub](http://hub.docker.com), [quay.io](https://quay.io), [Google Container Reg.](https://cloud.google.com/tools/container-registry/), [Artifactory](https://www.jfrog.com/artifactory/), [projectatomic.io](http://www.projectatomic.io/), [Treescale.com](https://treescale.com/), [Canister.io](https://www.canister.io/) |
+| Registry | [Portus](http://port.us.org/), [Docker Distribution](https://github.com/docker/distribution), [Docker Hub](http://hub.docker.com), [Quay](https://quay.io), [Google Container Reg.](https://cloud.google.com/tools/container-registry/), [Artifactory](https://www.jfrog.com/artifactory/), [ProjectAtomic](http://www.projectatomic.io/), [Treescale](https://treescale.com/), [Canister](https://www.canister.io/) |
 | PaaS | [Rancher](http://rancher.com/), [Tsuru](https://tsuru.io/), [dokku](https://github.com/dokku/dokku), [flynn](https://flynn.io/),  [Octohost](http://octohost.io/), [DEIS](http://deis.io/) |
 
 ---
